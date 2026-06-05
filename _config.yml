@@ -11,5 +11,9 @@ plugins:
   - jekyll-feed
 header_pages:
   - about.md
+show_excerpts: true
+permalink: /:categories/:title/
 minima:
   skin: dark
+author:
+  name: Nasang91
