@@ -2,21 +2,23 @@
 # Only the main Sass file needs front matter
 ---
 
-$bg: #0f1424;
-$panel: #151c31;
-$panel-2: #1b2440;
-$text: #edf2ff;
-$muted: #a8b3d1;
-$line: rgba(255, 255, 255, 0.1);
-$accent: #8aa2ff;
-$accent-soft: rgba(138, 162, 255, 0.14);
+$bg: #ffffff;
+$sidebar: #f8fafc;
+$panel: #ffffff;
+$panel-soft: #f8fafc;
+$text: #1f2937;
+$text-strong: #111827;
+$muted: #6b7280;
+$line: #e5e7eb;
+$accent: #2563eb;
+$accent-soft: #eff6ff;
 
 html, body {
   margin: 0;
   padding: 0;
   background: $bg;
   color: $text;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
   line-height: 1.7;
 }
 
@@ -41,15 +43,16 @@ a:hover {
   align-self: start;
   height: 100vh;
   padding: 32px 24px;
-  background: $panel;
+  background: $sidebar;
   border-right: 1px solid $line;
 }
 
 .site-brand {
   display: inline-block;
-  font-size: 1.5rem;
+  font-size: 1.45rem;
   font-weight: 800;
-  color: $text;
+  letter-spacing: -0.02em;
+  color: $text-strong;
   margin-bottom: 8px;
 }
 
@@ -78,17 +81,19 @@ a:hover {
   padding: 10px 12px;
   border-radius: 10px;
   color: $text;
+  font-weight: 500;
 }
 
 .site-nav a.active,
 .site-nav a:hover {
   background: $accent-soft;
+  color: $accent;
   text-decoration: none;
 }
 
 .site-content {
   padding: 40px 48px 64px;
-  max-width: 920px;
+  max-width: 960px;
 }
 
 .page-header {
@@ -98,6 +103,9 @@ a:hover {
 .page-header h1 {
   margin: 0 0 8px;
   font-size: 2.2rem;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: $text-strong;
 }
 
 .page-header p {
@@ -107,12 +115,20 @@ a:hover {
 
 .home-intro,
 .page-card,
-.post-card {
+.post-card,
+.category-card,
+.post-content,
+.page-content {
   background: $panel;
   border: 1px solid $line;
   border-radius: 18px;
   padding: 24px;
   margin-bottom: 20px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
+.home-intro {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
 }
 
 .post-list {
@@ -128,8 +144,17 @@ a:hover {
 .post-card h2,
 .post-card h3,
 .page-card h2,
-.home-intro h2 {
+.home-intro h2,
+.category-card h3,
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.page-content h1,
+.page-content h2,
+.page-content h3 {
   margin-top: 0;
+  color: $text-strong;
+  letter-spacing: -0.02em;
 }
 
 .post-meta,
@@ -145,43 +170,52 @@ a:hover {
   margin-top: 20px;
 }
 
-.category-card {
-  background: $panel;
-  border: 1px solid $line;
-  border-radius: 16px;
-  padding: 20px;
-}
-
-.category-card h3 {
-  margin-top: 0;
-  margin-bottom: 8px;
-}
-
 .post-content,
 .page-content {
-  background: $panel;
-  border: 1px solid $line;
-  border-radius: 18px;
-  padding: 28px;
+  font-size: 1rem;
 }
 
-pre,
+.post-content ul,
+.post-content ol,
+.page-content ul,
+.page-content ol,
+.home-intro ul {
+  padding-left: 20px;
+}
+
 code {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: $panel-soft;
+  border: 1px solid $line;
+  border-radius: 6px;
+  padding: 2px 6px;
 }
 
 pre {
   overflow-x: auto;
-  background: $panel-2;
+  background: #f3f4f6;
+  border: 1px solid $line;
   padding: 16px;
   border-radius: 12px;
 }
 
+pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
 blockquote {
   margin: 0;
-  padding-left: 16px;
-  border-left: 4px solid $accent;
+  padding: 4px 0 4px 16px;
+  border-left: 4px solid #bfdbfe;
   color: $muted;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid $line;
+  margin: 32px 0;
 }
 
 @media (max-width: 900px) {
