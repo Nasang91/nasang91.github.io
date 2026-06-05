@@ -1,12 +1,12 @@
 ---
 layout: default
 title: Development
-description: AI coding agent, orchestration, workflow 관련 글 모음
+description: AI Agent와 Vibe Coding 입문자를 위한 실전 튜토리얼 모음
 permalink: /development/
 ---
 
 <div class="page-card">
-  <p>개발 섹션에서는 Codex, Hermes, orchestration, harness, workflow 관련 글을 모아봅니다.</p>
+  <p>이 섹션은 <strong>AI Agent나 Vibe Coding이 처음인 개발자</strong>를 위해 준비한 실전형 튜토리얼 모음입니다. 설치부터 실행, 검증, 실제 프로젝트 적용까지 순서대로 따라갈 수 있도록 구성했습니다.</p>
 </div>
 
 <ul class="post-list">
