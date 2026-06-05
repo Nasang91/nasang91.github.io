@@ -2,7 +2,7 @@
 layout: post
 title: "Codex Symphony를 이용해서 개발하기"
 date: 2026-06-05 10:10:00 +0900
-categories: [workflow]
+categories: [development, workflow]
 tags: [codex, symphony, ai-agent, development]
 excerpt: "Codex Symphony로 planner, coder, reviewer 역할을 나누고 구조적인 개발 흐름을 설계하는 방법을 정리합니다."
 ---

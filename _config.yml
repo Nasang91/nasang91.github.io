@@ -9,11 +9,25 @@ highlighter: rouge
 theme: minima
 plugins:
   - jekyll-feed
-header_pages:
-  - about.md
 show_excerpts: true
 permalink: /:categories/:title/
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
 minima:
   skin: dark
 author:
   name: Nasang91
+navigation:
+  - title: Home
+    url: /
+  - title: Development
+    url: /development/
+  - title: Life
+    url: /life/
+  - title: Resume
+    url: /resume/
+  - title: About
+    url: /about/

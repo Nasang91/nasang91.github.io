@@ -2,7 +2,7 @@
 layout: post
 title: "Codex + Hermes로 Coding Orchestration 구축하기"
 date: 2026-06-05 10:00:00 +0900
-categories: [orchestration]
+categories: [development, orchestration]
 tags: [codex, hermes, ai-agent, review, merge]
 excerpt: "Codex에 구현을 맡기고 Hermes가 리뷰와 merge gate를 담당하는 기본 orchestration 구조를 설계합니다."
 ---
