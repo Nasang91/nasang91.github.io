@@ -7,11 +7,38 @@ tags: [hermes, codex, toy-project, tutorial, vibe-coding]
 excerpt: "Hermes를 오케스트레이터로, Codex를 구현 agent로 사용해 작은 Toy Project를 단계별로 완성하는 실전 튜토리얼입니다."
 ---
 
-> 이 글은 앞선 두 글에서 설치한 **Hermes와 Codex를 실제로 함께 사용하는 첫 실습**입니다. 목표는 단순히 도구를 아는 것이 아니라, **직접 실행해보면서 “어떻게 협업시키는지”를 체험하는 것**입니다.
+<div class="callout tip">
+  <h3>이 글의 목표</h3>
+  <p>이 글은 앞선 두 글에서 설치한 <strong>Hermes와 Codex를 실제로 함께 사용하는 첫 실습</strong>입니다. 목표는 단순히 도구를 아는 것이 아니라, <strong>직접 실행해보면서 “어떻게 협업시키는지”를 체험하는 것</strong>입니다.</p>
+</div>
+
+<div class="series-guide">
+  <h2>시리즈 읽는 순서</h2>
+  <ol class="series-steps">
+    <li><a href="{{ '/development/hermes-intro-and-setup-guide/' | relative_url }}">1단계. Hermes 입문</a></li>
+    <li><a href="{{ '/development/codex-intro-install-auth-first-run/' | relative_url }}">2단계. Codex 입문</a></li>
+    <li><strong>3단계. 현재 글</strong>: Hermes + Codex로 Toy Project 실습</li>
+  </ol>
+</div>
+
+<div class="diagram-card">
+  <h3>전체 협업 흐름</h3>
+  <pre><code>[User Request]
+      |
+      v
+[Hermes: scope / plan / prompt]
+      |
+      v
+[Codex: implement code changes]
+      |
+      v
+[Hermes: review / validate / report]
+      |
+      v
+[Developer: manual test / approve next step]</code></pre>
+</div>
 
 ## 이 글을 읽고 나면 할 수 있는 것
-
-이 글을 마치면 아래를 직접 해볼 수 있습니다.
 
 - React + Vite + TypeScript 기반 Toy Project를 시작할 수 있다.
 - Hermes에게 범위를 정리시키고,
@@ -20,7 +47,7 @@ excerpt: "Hermes를 오케스트레이터로, Codex를 구현 agent로 사용해
 
 ## 1. 이번 실습에서 만들 것
 
-이번 실습에서는 브라우저에서 실행되는 작은 앱인 **Minecraft-inspired Mini Block Builder**를 만듭니다.
+이번 실습에서는 브라우저에서 실행되는 작은 앱인 <strong>Minecraft-inspired Mini Block Builder</strong>를 만듭니다.
 
 최종 목표:
 
@@ -31,35 +58,7 @@ excerpt: "Hermes를 오케스트레이터로, Codex를 구현 agent로 사용해
 - 툴바 UI
 - 저장 / 불러오기 / 초기화
 
-이 프로젝트를 고른 이유는 단순합니다.
-
-- 기능이 너무 크지 않다
-- React + TypeScript 실습에 적합하다
-- Hermes와 Codex의 역할 분담을 설명하기 좋다
-
-## 2. 이번 실습의 핵심 역할 분담
-
-이번 글의 핵심은 아래 구조입니다.
-
-```text
-User
-  -> Hermes (scope, planning, review)
-  -> Codex (implementation)
-  -> Hermes (validation, report)
-```
-
-한 줄로 요약하면:
-
-- **Hermes는 무엇을 할지 정리한다**
-- **Codex는 실제 코드를 작성한다**
-- **Hermes가 다시 결과를 검토한다**
-
-즉, Hermes는 오케스트레이터,
-Codex는 구현 agent입니다.
-
-## 3. 왜 둘을 함께 쓰는가
-
-Hermes와 Codex를 분리하면 아래 장점이 있습니다.
+## 2. 왜 둘을 함께 쓰는가
 
 ### Hermes가 잘하는 일
 - 요구사항 정리
@@ -74,21 +73,9 @@ Hermes와 Codex를 분리하면 아래 장점이 있습니다.
 - 기능 구현
 - 테스트/구조 보강
 
-즉,
-**생각하는 역할과 구현하는 역할을 분리하면 결과가 더 안정적**입니다.
+즉, <strong>생각하는 역할과 구현하는 역할을 분리하면 결과가 더 안정적</strong>입니다.
 
-## 4. 사전 준비물
-
-아래가 준비되어 있어야 합니다.
-
-- Hermes 설치 완료
-- Codex 설치 완료
-- 인증 완료
-- Node.js 18+
-- npm
-- Git
-
-확인 명령:
+## 3. 사전 준비물
 
 ```bash
 hermes --version
@@ -98,41 +85,30 @@ npm -v
 git --version
 ```
 
-## 5. 프로젝트 생성
+필요한 것:
+- Hermes 설치 완료
+- Codex 설치 완료
+- 인증 완료
+- Node.js 18+
+- npm
+- Git
 
-작업 폴더를 만듭니다.
+## 4. 프로젝트 생성
 
 ```bash
 mkdir minecraft-mini-block-builder
 cd minecraft-mini-block-builder
-```
-
-React + Vite + TypeScript 프로젝트를 생성합니다.
-
-```bash
 npm create vite@latest . -- --template react-ts
 npm install
-```
-
-Git 저장소로 초기화합니다.
-
-```bash
 git init
 git add .
 git commit -m "chore: initialize vite react ts project"
-```
-
-실행이 되는지 확인합니다.
-
-```bash
 npm run dev
 ```
 
 브라우저에서 기본 Vite 화면이 보이면 준비 완료입니다.
 
-## 6. 우리가 목표로 하는 구조
-
-이번 실습에서는 아래 정도 구조를 목표로 합니다.
+## 5. 우리가 목표로 하는 구조
 
 ```text
 src/
@@ -150,12 +126,7 @@ src/
     world.ts
 ```
 
-중요한 점은, 처음부터 이 구조를 사람이 손으로 다 만드는 것이 아니라,
-**Hermes가 계획하고 Codex가 구현하도록 유도하는 것**입니다.
-
-## 7. 전체 워크숍 로드맵
-
-이번 실습은 아래 3일 구조로 나눠 진행합니다.
+## 6. 전체 워크숍 로드맵
 
 ```text
 Day 1 -> MVP 만들기
@@ -179,9 +150,7 @@ Day 3 -> polish + README + 데모 마감
 - README 작성
 - 데모 가능한 상태 만들기
 
-## 8. Day 1 - Hermes에게 먼저 범위를 정리시키기
-
-Hermes를 실행한 뒤 아래처럼 요청합니다.
+## 7. Day 1 - Hermes에게 먼저 범위를 정리시키기
 
 ```text
 We are building a Minecraft-inspired Mini Block Builder as a web app.
@@ -197,12 +166,7 @@ Day 1 scope:
 - Keep the implementation simple and maintainable
 ```
 
-이 프롬프트의 핵심은 “구현”을 바로 시키는 것이 아니라,
-먼저 Hermes가 범위를 **작게** 잡게 만드는 것입니다.
-
-## 9. Day 1 - 더 실전적인 방식: Hermes에게 Codex 실행까지 맡기기
-
-실제로는 아래처럼 Hermes에게 오케스트레이션 전체를 맡기는 것이 더 좋습니다.
+## 8. Day 1 - Hermes에게 Codex 실행까지 맡기기
 
 ```text
 Please act as the orchestrator for this repository.
@@ -222,28 +186,19 @@ Day 1 requirements:
 - Do not add saving, erasing, or advanced extra features yet
 ```
 
-이 프롬프트는 강의/실습에서 특히 좋습니다.
-왜냐하면 사용자가 매번 직접 `codex exec ...`를 조작하지 않아도,
-Hermes가 역할을 나눠 처리하는 구조를 자연스럽게 경험할 수 있기 때문입니다.
-
-## 10. Day 1에서 사람이 직접 확인할 것
-
-구현이 끝나면 무조건 브라우저에서 직접 확인합니다.
+## 9. Day 1에서 사람이 직접 확인할 것
 
 ```bash
 npm run dev
 ```
 
 체크리스트:
-
 - [ ] grid가 보이는가
 - [ ] 셀 클릭이 되는가
 - [ ] 클릭한 셀에 블록이 놓이는가
 - [ ] 앱이 깨지지 않고 실행되는가
 
-## 11. Day 1 후 Hermes에게 리뷰 요청
-
-아래처럼 요청합니다.
+## 10. Day 1 후 Hermes에게 리뷰 요청
 
 ```text
 Review the current implementation of Day 1 for the Minecraft-inspired Mini Block Builder.
@@ -253,21 +208,7 @@ Please do these things:
 3. Suggest the next Day 2 Codex prompt.
 ```
 
-이 단계가 중요합니다.
-**Codex 결과를 그대로 끝내지 말고 Hermes가 범위, 구조, 다음 단계까지 정리하게 해야 품질이 안정적**입니다.
-
-## 12. Day 2 - 블록 종류, 삭제, 저장 기능 추가
-
-이제 기능을 조금 확장합니다.
-
-Day 2 목표:
-
-- 블록 타입 3종 추가
-- 삭제 기능 추가
-- 툴바 UI 추가
-- save/load/reset 추가
-
-### 12-1. Hermes에게 Day 2 작업 분해 요청
+## 11. Day 2 - 블록 종류, 삭제, 저장 기능 추가
 
 ```text
 We finished Day 1.
@@ -281,7 +222,7 @@ Day 2 scope:
 Keep the implementation workshop-friendly.
 ```
 
-### 12-2. Hermes에게 Day 2 구현 오케스트레이션 맡기기
+그리고 구현은 아래처럼 맡깁니다.
 
 ```text
 Use Codex as the coding agent for Day 2 in this repository.
@@ -301,9 +242,7 @@ Day 2 scope:
 - Do not add advanced features beyond this scope
 ```
 
-## 13. Day 2에서 사람이 직접 확인할 것
-
-브라우저에서 아래를 체크합니다.
+## 12. Day 2에서 사람이 직접 확인할 것
 
 - [ ] 블록 종류 3개 이상 선택 가능
 - [ ] 지우기 동작 가능
@@ -311,30 +250,7 @@ Day 2 scope:
 - [ ] 새로고침 후 불러오기 가능
 - [ ] reset 가능
 
-## 14. Day 2 후 Hermes에게 구조 리뷰 요청
-
-```text
-Review the current Day 2 implementation.
-Focus on:
-- code organization
-- whether state handling is getting messy
-- whether localStorage handling is clean enough
-- what should be improved on Day 3 only
-```
-
-## 15. Day 3 - polish와 마무리
-
-마지막 날은 기능을 크게 늘리는 것이 아니라,
-강의/실습용으로 마무리 가능한 상태를 만드는 데 집중합니다.
-
-### 목표
-
-- UI 정리
-- 작은 버그 수정
-- README 작성
-- 데모 가능한 상태로 마감
-
-### Hermes 요청 예시
+## 13. Day 3 - polish와 마무리
 
 ```text
 Use Codex as the coding agent for the final Day 3 polish pass.
@@ -353,18 +269,16 @@ Focus on:
 - workshop-friendly simplicity
 ```
 
-## 16. Day 3에서 사람이 직접 확인할 것
+## 14. Day 3에서 사람이 직접 확인할 것
 
 - [ ] 버튼과 선택 상태가 직관적인가
 - [ ] 레이아웃이 무너지지 않는가
 - [ ] 저장/불러오기/초기화가 안정적으로 동작하는가
 - [ ] 데모 중 설명하기 쉬운 구조인가
 
-## 17. README 템플릿 예시
+## 15. README 템플릿 예시
 
-Toy Project를 마감할 때는 README도 같이 정리하는 것이 좋습니다.
-
-```md
+````markdown
 # Minecraft-inspired Mini Block Builder
 
 A workshop project built with Hermes + Codex collaboration.
@@ -397,89 +311,41 @@ npm run dev
 ## Workshop Theme
 Hermes was used for planning, decomposition, and review.
 Codex was used for implementation.
-```
+````
 
-## 18. 이 실습에서 중요한 운영 원칙
+## 16. 이 실습에서 중요한 운영 원칙
 
-### 원칙 1. Hermes가 먼저 생각한다
-처음부터 Codex에게 구현만 던지지 말고,
-Hermes가 작업 범위와 완료 조건을 정리하게 합니다.
+- <strong>Hermes가 먼저 생각한다</strong>
+- <strong>Codex는 구현에 집중시킨다</strong>
+- <strong>Hermes가 마무리한다</strong>
 
-### 원칙 2. Codex는 구현에 집중시킨다
-Codex에게는 아래를 분명히 줍니다.
+## 17. 자주 하는 실수
 
-- 오늘 구현할 범위
-- 하지 말아야 할 것
-- 완료 조건
+- Day 1부터 기능을 너무 많이 넣기
+- Codex 결과를 무조건 신뢰하기
+- Hermes에게 너무 추상적으로 요청하기
+- 매 단계마다 수동 검증을 생략하기
 
-### 원칙 3. Hermes가 마무리한다
-최종 단계는 항상 Hermes가 맡는 것이 좋습니다.
+<div class="callout warning">
+  <h3>실습 팁</h3>
+  <p>실습이 잘 굴러가는 핵심은 “한 번에 크게 시키지 않는 것”입니다. Day 1 / Day 2 / Day 3처럼 작은 성공을 쌓는 방식이 훨씬 안정적입니다.</p>
+</div>
 
-- 변경 파일 리뷰
-- 테스트/실행 체크
-- 결과 요약
-- 남은 리스크 정리
-
-## 19. 그림으로 보는 전체 흐름
-
-```text
-[User Request]
-      |
-      v
-[Hermes: scope / plan / prompt]
-      |
-      v
-[Codex: implement code changes]
-      |
-      v
-[Hermes: review / validate / report]
-      |
-      v
-[Developer: manual test / approve next step]
-```
-
-## 20. 자주 하는 실수
-
-### 실수 1. Day 1부터 기능을 너무 많이 넣기
-작은 성공 경험이 더 중요합니다.
-
-### 실수 2. Codex 결과를 무조건 신뢰하기
-반드시 diff와 실제 동작을 확인해야 합니다.
-
-### 실수 3. Hermes에게 너무 추상적으로 요청하기
-“잘 만들어줘”보다는,
-“오늘은 grid rendering만”,
-“이번엔 save/load만”처럼 좁게 요청하는 것이 좋습니다.
-
-### 실수 4. 매 단계마다 수동 검증을 생략하기
-브라우저 체크리스트를 넣는 이유는,
-실습이 “겉으로만 완료”되지 않게 하기 위해서입니다.
-
-## 21. 초보자 FAQ
+## 18. 초보자 FAQ
 
 ### Q1. 꼭 Hermes를 통해 Codex를 써야 하나요?
 꼭 그렇지는 않습니다. 하지만 입문 단계에서는 Hermes를 통해 범위를 먼저 정리한 뒤 Codex를 쓰는 흐름이 훨씬 안정적입니다.
 
-### Q2. Codex에게 직접 명령해도 되나요?
-가능합니다. 다만 이 글은 역할 분리를 배우는 데 목적이 있습니다.
-
-### Q3. 왜 Toy Project가 좋은 실습 주제인가요?
+### Q2. 왜 Toy Project가 좋은 실습 주제인가요?
 작고 명확해서 성공 경험을 얻기 좋고, Hermes와 Codex의 역할 차이를 설명하기 좋기 때문입니다.
 
-## 22. 이 글의 핵심 요약
+## 19. 이 글의 핵심 요약
 
-이 실습에서 기억해야 할 것은 세 가지입니다.
+1. <strong>Hermes는 분석/계획/검토 담당</strong>
+2. <strong>Codex는 구현 담당</strong>
+3. <strong>사람은 범위 통제와 최종 검증 담당</strong>
 
-1. **Hermes는 분석/계획/검토 담당**
-2. **Codex는 구현 담당**
-3. **사람은 범위 통제와 최종 검증 담당**
-
-이 역할 분리를 지키면,
-AI Agent에 익숙하지 않은 개발자도 훨씬 안정적으로 실습을 진행할 수 있습니다.
-
-## 23. 다음에 확장해볼 만한 것
-
-이 Mini Block Builder가 끝나면 다음도 해볼 수 있습니다.
+## 20. 다음에 확장해볼 만한 것
 
 - README 자동 정리
 - 테스트 코드 추가
