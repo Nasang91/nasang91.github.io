@@ -2,20 +2,20 @@
 # Only the main Sass file needs front matter
 ---
 
-$bg: #ffffff;
-$sidebar: #f8fafc;
+$bg: #fcfcfd;
+$sidebar: #f6f7fb;
 $panel: #ffffff;
 $panel-soft: #f8fafc;
 $text: #1f2937;
-$text-strong: #111827;
-$muted: #6b7280;
-$line: #e5e7eb;
+$text-strong: #0f172a;
+$muted: #667085;
+$line: #e7eaf0;
 $accent: #2563eb;
 $accent-soft: #eff6ff;
 $warn-bg: #fff7ed;
-$warn-line: #fdba74;
+$warn-line: #fb923c;
 $tip-bg: #f0fdf4;
-$tip-line: #86efac;
+$tip-line: #22c55e;
 
 html, body {
   margin: 0;
@@ -23,7 +23,12 @@ html, body {
   background: $bg;
   color: $text;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
-  line-height: 1.7;
+  line-height: 1.8;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 a {
@@ -37,7 +42,7 @@ a:hover {
 
 .site-shell {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
+  grid-template-columns: 248px minmax(0, 1fr);
   min-height: 100vh;
 }
 
@@ -46,14 +51,14 @@ a:hover {
   top: 0;
   align-self: start;
   height: 100vh;
-  padding: 32px 24px;
+  padding: 28px 20px;
   background: $sidebar;
   border-right: 1px solid $line;
 }
 
 .site-brand {
   display: inline-block;
-  font-size: 1.45rem;
+  font-size: 1.2rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: $text-strong;
@@ -63,11 +68,12 @@ a:hover {
 .site-tagline {
   margin: 0;
   color: $muted;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
 .site-nav {
-  margin-top: 32px;
+  margin-top: 28px;
 }
 
 .site-nav ul {
@@ -77,14 +83,15 @@ a:hover {
 }
 
 .site-nav li + li {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .site-nav a {
   display: block;
-  padding: 10px 12px;
+  padding: 9px 12px;
   border-radius: 10px;
   color: $text;
+  font-size: 0.95rem;
   font-weight: 500;
 }
 
@@ -96,25 +103,36 @@ a:hover {
 }
 
 .site-content {
-  padding: 40px 48px 64px;
-  max-width: 960px;
+  padding: 56px 40px 72px;
+}
+
+.page-header,
+.home-intro,
+.page-card,
+.series-guide,
+.post-content,
+.page-content,
+.callout,
+.diagram-card {
+  max-width: 760px;
 }
 
 .page-header {
-  margin-bottom: 28px;
+  margin-bottom: 22px;
 }
 
 .page-header h1 {
-  margin: 0 0 8px;
-  font-size: 2.2rem;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
+  margin: 0 0 10px;
+  font-size: 2.4rem;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
   color: $text-strong;
 }
 
 .page-header p {
   margin: 0;
   color: $muted;
+  font-size: 1.02rem;
 }
 
 .home-intro,
@@ -128,24 +146,25 @@ a:hover {
 .diagram-card {
   background: $panel;
   border: 1px solid $line;
-  border-radius: 18px;
-  padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+  border-radius: 16px;
+  padding: 22px;
+  margin-bottom: 18px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
 }
 
 .home-intro {
-  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
 }
 
 .post-list {
   list-style: none;
   padding: 0;
   margin: 24px 0 0;
+  max-width: 760px;
 }
 
 .post-list li + li {
-  margin-top: 16px;
+  margin-top: 14px;
 }
 
 .post-card h2,
@@ -164,7 +183,21 @@ a:hover {
 .diagram-card h3 {
   margin-top: 0;
   color: $text-strong;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
+}
+
+.post-content h2,
+.page-content h2 {
+  margin-top: 40px;
+  margin-bottom: 14px;
+  font-size: 1.55rem;
+}
+
+.post-content h3,
+.page-content h3 {
+  margin-top: 28px;
+  margin-bottom: 10px;
+  font-size: 1.12rem;
 }
 
 .post-meta,
@@ -173,11 +206,27 @@ a:hover {
   color: $muted;
 }
 
+.post-card p,
+.page-card p,
+.home-intro p,
+.post-content p,
+.page-content p,
+.series-guide p,
+.callout p {
+  margin: 0 0 14px;
+}
+
+.post-content > p:first-of-type,
+.page-content > p:first-of-type {
+  font-size: 1.04rem;
+}
+
 .category-grid {
   display: grid;
-  gap: 16px;
+  gap: 14px;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  margin-top: 20px;
+  margin-top: 18px;
+  max-width: 760px;
 }
 
 .post-content,
@@ -190,26 +239,34 @@ a:hover {
 .page-content ul,
 .page-content ol,
 .home-intro ul,
-.series-guide ol {
+.series-guide ol,
+.page-card ul {
   padding-left: 20px;
 }
 
 .series-steps li + li {
-  margin-top: 16px;
+  margin-top: 14px;
 }
 
 .callout.tip {
   background: $tip-bg;
-  border-left: 6px solid $tip-line;
+  border: 1px solid rgba(34, 197, 94, 0.16);
+  border-left: 5px solid $tip-line;
 }
 
 .callout.warning {
   background: $warn-bg;
-  border-left: 6px solid $warn-line;
+  border: 1px solid rgba(251, 146, 60, 0.18);
+  border-left: 5px solid $warn-line;
+}
+
+.diagram-card {
+  background: #fbfcfe;
 }
 
 .diagram-card pre {
   margin: 0;
+  background: #f8fafc;
 }
 
 code {
@@ -218,11 +275,12 @@ code {
   border: 1px solid $line;
   border-radius: 6px;
   padding: 2px 6px;
+  font-size: 0.92em;
 }
 
 pre {
   overflow-x: auto;
-  background: #f3f4f6;
+  background: #f8fafc;
   border: 1px solid $line;
   padding: 16px;
   border-radius: 12px;
@@ -235,7 +293,7 @@ pre code {
 }
 
 blockquote {
-  margin: 0;
+  margin: 24px 0;
   padding: 4px 0 4px 16px;
   border-left: 4px solid #bfdbfe;
   color: $muted;
@@ -245,6 +303,10 @@ hr {
   border: 0;
   border-top: 1px solid $line;
   margin: 32px 0;
+}
+
+strong {
+  color: $text-strong;
 }
 
 @media (max-width: 900px) {
@@ -260,6 +322,10 @@ hr {
   }
 
   .site-content {
-    padding: 28px 20px 48px;
+    padding: 32px 18px 48px;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
   }
 }
