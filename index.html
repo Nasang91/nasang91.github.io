@@ -8,16 +8,21 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
+    <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
     <header class="site-header">
       <a class="brand" href="#home" aria-label="Nasang 홈">NASANG<span>_</span></a>
       <nav aria-label="주요 메뉴">
+        <a href="#home">Home</a>
         <a href="#about">About</a>
+        <a href="#experience">Experience</a>
         <a href="#projects">Projects</a>
+        <a href="#research">Research</a>
+        <a href="#contact">Contact</a>
         <a href="#games">Games</a>
       </nav>
     </header>
 
-    <main>
+    <main id="main-content">
       <section id="home" class="hero" aria-labelledby="hero-title">
         <p class="eyebrow">ANDROID APP DEVELOPER · AI AGENT BUILDER</p>
         <h1 id="hero-title">AI Agent와 함께<br><span>다음 것을 만듭니다.</span></h1>
@@ -30,8 +35,14 @@
         <p>문제를 나누고, 빠르게 시도하고, 더 나은 개발 루프를 설계합니다.</p>
       </section>
 
+      <section id="experience" class="content-section" aria-labelledby="experience-title">
+        <p class="section-label">02 / EXPERIENCE</p>
+        <h2 id="experience-title">제품의 시작과 끝을 연결합니다.</h2>
+        <p>삼성전자 MX 사업부에서 Android App을 개발하며, 모바일 경험을 중심으로 Server Backend와 Frontend까지 이어지는 흐름을 살펴봅니다.</p>
+      </section>
+
       <section id="projects" class="content-section" aria-labelledby="projects-title">
-        <p class="section-label">02 / PROJECTS</p>
+        <p class="section-label">03 / PROJECTS</p>
         <h2 id="projects-title">여러 플랫폼을 연결하는 작업</h2>
         <div class="project-grid">
           <article><span>01</span><h3>Server Backend</h3><p>서비스를 지탱하는 구조와 API를 만듭니다.</p></article>
@@ -40,15 +51,48 @@
         </div>
       </section>
 
+      <section id="research" class="content-section" aria-labelledby="research-title">
+        <p class="section-label">04 / RESEARCH</p>
+        <h2 id="research-title">AI Agent와 개발 루프를 탐구합니다.</h2>
+        <p>AI Agent를 활용해 개발하는 방법과 여러 플랫폼을 빠르게 연결하는 작업에 관심이 있습니다.</p>
+      </section>
+
+      <section id="contact" class="content-section" aria-labelledby="contact-title">
+        <p class="section-label">05 / CONTACT</p>
+        <h2 id="contact-title">공개 연락처는 준비 중입니다.</h2>
+        <p>현재 공개 이메일·SNS·GitHub·CV 링크는 제공하지 않습니다.</p>
+      </section>
+
       <section id="games" class="content-section game-placeholder" aria-labelledby="games-title">
-        <p class="section-label">03 / GAMES</p>
-        <h2 id="games-title">Playground</h2>
-        <p>지렁이 게임이 들어올 자리입니다. 다음 루프에서 키보드·터치 조작과 장애물을 구현합니다.</p>
-        <div class="game-board" role="img" aria-label="게임 준비 영역">SYSTEM READY<span>_</span></div>
+        <p class="section-label">06 / GAMES</p>
+        <h2 id="games-title">Snake Protocol</h2>
+        <p>키보드, WASD 또는 모바일 버튼으로 지렁이를 움직이세요. 장애물은 4초마다 생성되고 4초 뒤 사라집니다.</p>
+        <div class="game-shell">
+          <div class="game-hud" aria-label="게임 점수">
+            <span>SCORE <strong id="game-score">0</strong></span>
+            <span>BEST <strong id="game-high-score">0</strong></span>
+            <span id="game-status" role="status" aria-live="polite">READY</span>
+          </div>
+          <canvas id="snake-game" width="400" height="400" aria-label="지렁이 게임 보드"></canvas>
+          <div class="game-actions">
+            <button id="game-start" type="button">START</button>
+            <button id="game-pause" type="button">PAUSE</button>
+            <button id="game-restart" type="button">RESTART</button>
+          </div>
+          <div class="touch-controls" aria-label="모바일 게임 방향 버튼">
+            <button type="button" data-direction="up" aria-label="위로 이동">▲</button>
+            <div>
+              <button type="button" data-direction="left" aria-label="왼쪽으로 이동">◀</button>
+              <button type="button" data-direction="down" aria-label="아래로 이동">▼</button>
+              <button type="button" data-direction="right" aria-label="오른쪽으로 이동">▶</button>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
 
     <footer><span>NASANG_</span><span>BUILDING WITH AI AGENTS</span></footer>
     <script src="script.js"></script>
+    <script src="game.js"></script>
   </body>
 </html>
