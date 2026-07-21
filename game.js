@@ -5,6 +5,7 @@
   const context = canvas.getContext('2d');
   const gridSize = 20;
   const cellSize = canvas.width / gridSize;
+  const safetyZoneSize = 4;
   const highScoreKey = 'nasang-snake-high-score';
   const directions = {
     up: { x: 0, y: -1 },
@@ -60,7 +61,26 @@
     return first.x === second.x && first.y === second.y;
   }
 
-  function randomPosition() {
+  function getHeadSafetyZone() {
+    const head = state.snake[0];
+    const offset = Math.floor((safetyZoneSize - 1) / 2);
+    const startX = head.x - offset;
+    const startY = head.y - offset;
+    return {
+      startX,
+      startY,
+      endX: startX + safetyZoneSize - 1,
+      endY: startY + safetyZoneSize - 1,
+    };
+  }
+
+  function isInHeadSafetyZone(position) {
+    const zone = getHeadSafetyZone();
+    return position.x >= zone.startX && position.x <= zone.endX
+      && position.y >= zone.startY && position.y <= zone.endY;
+  }
+
+  function randomPosition({ avoidHeadSafetyZone = false } = {}) {
     for (let attempt = 0; attempt < 400; attempt += 1) {
       const position = {
         x: Math.floor(Math.random() * gridSize),
@@ -69,9 +89,10 @@
       if (state.snake.some((part) => samePosition(part, position))) continue;
       if (state.obstacles.some((obstacle) => samePosition(obstacle, position))) continue;
       if (state.food && samePosition(state.food, position)) continue;
+      if (avoidHeadSafetyZone && isInHeadSafetyZone(position)) continue;
       return position;
     }
-    return { x: 0, y: 0 };
+    return null;
   }
 
   function clearTimers() {
@@ -153,7 +174,8 @@
     if (state.phase !== 'running' || state.spawnedObstacles >= 5) return;
     cleanupObstacles();
     if (state.obstacles.length >= 3) return;
-    const position = randomPosition();
+    const position = randomPosition({ avoidHeadSafetyZone: true });
+    if (!position) return;
     state.obstacles.push({ ...position, expiresAt: Date.now() + 4000 });
     state.spawnedObstacles += 1;
     draw();
@@ -215,6 +237,7 @@
   }
 
   const keyDirections = {
+    KeyW: directions.up, KeyS: directions.down, KeyA: directions.left, KeyD: directions.right,
     ArrowUp: directions.up, w: directions.up, W: directions.up,
     ArrowDown: directions.down, s: directions.down, S: directions.down,
     ArrowLeft: directions.left, a: directions.left, A: directions.left,
@@ -222,7 +245,7 @@
   };
 
   document.addEventListener('keydown', (event) => {
-    const nextDirection = keyDirections[event.key];
+    const nextDirection = keyDirections[event.code] || keyDirections[event.key];
     if (!nextDirection) return;
     event.preventDefault();
     setDirection(nextDirection);
@@ -246,6 +269,13 @@
 
   resetState();
   window.snakeGame = {
-    getState: () => ({ phase: state.phase, score: state.score, highScore: state.highScore, obstacles: state.obstacles.length }),
+    getState: () => ({
+      phase: state.phase,
+      score: state.score,
+      highScore: state.highScore,
+      obstacles: state.obstacles.length,
+      head: { ...state.snake[0] },
+      headSafetyZone: getHeadSafetyZone(),
+    }),
   };
 })();
